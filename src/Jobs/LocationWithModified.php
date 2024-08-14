@@ -34,6 +34,8 @@ use Seat\Eveapi\Models\Location\CharacterLocation;
  */
 class LocationWithModified extends AbstractAuthCharacterJob
 {
+    public $queue = 'high';
+
     /**
      * @var string
      */

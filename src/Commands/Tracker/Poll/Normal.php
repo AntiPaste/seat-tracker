@@ -12,8 +12,6 @@ class Normal extends Command
 {
     use DispatchesJobs;
 
-    public $queue = 'high';
-
     protected $signature = 'tracker:poll:normal';
 
     protected $description = 'Poll location tracker at a normal frequency.';

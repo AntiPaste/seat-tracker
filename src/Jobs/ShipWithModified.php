@@ -8,6 +8,8 @@ use Seat\Eveapi\Models\Location\CharacterShip;
 
 class ShipWithModified extends AbstractAuthCharacterJob
 {
+    public $queue = 'high';
+
     /**
      * @var string
      */

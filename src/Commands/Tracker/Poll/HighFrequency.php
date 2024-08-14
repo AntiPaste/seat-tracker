@@ -13,8 +13,6 @@ class HighFrequency extends Command
 {
     use DispatchesJobs;
 
-    public $queue = 'high';
-
     protected $signature = 'tracker:poll:highfrequency';
 
     protected $description = 'Poll location tracker at a high frequency.';
