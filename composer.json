@@ -1,5 +1,6 @@
 {
   "name": "antipaste/seat-tracker",
+  "description": "SeAT tracker",
   "type": "seat-plugin",
   "version": "1.0.0",
   "autoload": {
