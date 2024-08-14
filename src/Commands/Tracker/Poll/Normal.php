@@ -4,11 +4,9 @@ namespace Anon\Seat\Tracker\Commands\Tracker\Poll;
 
 use Anon\Seat\Tracker\Jobs\LocationWithModified;
 use Anon\Seat\Tracker\Jobs\ShipWithModified;
-use Anon\Seat\Tracker\Models\HighFrequencyPoll;
 use Illuminate\Console\Command;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Seat\Eveapi\Models\Character\CharacterInfo;
-use Seat\Eveapi\Models\RefreshToken;
 
 class Normal extends Command
 {
@@ -32,8 +30,8 @@ class Normal extends Command
 
         $start = microtime(true);
         foreach ($targets as $target) {
-            $this->dispatchSync(new LocationWithModified($target->refresh_token));
-            $this->dispatchSync(new ShipWithModified($target->refresh_token));
+            (new LocationWithModified($target->refresh_token))->handle(true);
+            (new ShipWithModified($target->refresh_token))->handle(true);
         }
 
         $end = microtime(true);

@@ -33,8 +33,8 @@ class HighFrequency extends Command
                 continue;
             }
 
-            $this->dispatchSync(new LocationWithModified($refreshToken));
-            $this->dispatchSync(new ShipWithModified($refreshToken));
+            (new LocationWithModified($refreshToken))->handle(true);
+            (new ShipWithModified($refreshToken))->handle(true);
         }
 
         $end = microtime(true);

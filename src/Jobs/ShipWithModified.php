@@ -38,9 +38,9 @@ class ShipWithModified extends AbstractAuthCharacterJob
      *
      * @throws \Throwable
      */
-    public function handle()
+    public function handle($noParentHandle = false)
     {
-        parent::handle();
+        if (!$noParentHandle) parent::handle();
 
         $response = $this->retrieve([
             'character_id' => $this->getCharacterId(),
