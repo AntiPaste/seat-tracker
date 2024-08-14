@@ -1,0 +1,25 @@
+{
+  "name": "antipaste/seat-tracker",
+  "type": "seat-plugin",
+  "version": "1.0.0",
+  "autoload": {
+    "psr-4": {
+      "Anon\\Seat\\Tracker\\": "src/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "require": {
+    "php": "^8.2",
+    "laravel/framework": "^10.0",
+    "eveseat/services": "^5.0",
+    "eveseat/web": "^5.0"
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Anon\\Seat\\Tracker\\TrackerServiceProvider"
+      ]
+    }
+  }
+}
