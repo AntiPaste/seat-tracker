@@ -16,18 +16,30 @@ class TrackerController extends Controller
         $oldestUpdatedAt = null;
 
         $systemCounts = [];
+        $totalCountedCharacters = 0;
+
+        $totalValidCharacters = CharacterInfo::where(function ($subQuery) {
+            $subQuery->whereHas('refresh_token', function ($query) {
+                $query->where('expires_on', '>=', carbon());
+            });
+        })->whereHas('location')->count();
 
         $validCharacters = CharacterInfo::with('refresh_token')->with('location')->where(function ($subQuery) {
             $subQuery->whereHas('refresh_token', function ($query) {
                 $query->where('expires_on', '>=', carbon());
             });
-        })->whereHas('location')->get();
+        })->where(function ($subQuery) {
+            $subQuery->whereHas('location', function ($query) {
+                $query->where('last_modified', '>=', carbon()->subMinutes(30));
+            });
+        })->get();
 
         foreach ($validCharacters as $character) {
             if (!$oldestUpdatedAt || $character->location->last_modified < $oldestUpdatedAt) {
                 $oldestUpdatedAt = $character->location->last_modified;
             }
 
+            $totalCountedCharacters++;
             $systemCounts[$character->location->solar_system_id] = ($systemCounts[$character->location->solar_system_id] ?? 0) + 1;
         }
 
@@ -46,7 +58,7 @@ class TrackerController extends Controller
 
         return $dataTable
             ->addScope(new CharacterScope)
-            ->render('tracker::index', ['systems' => $systems, 'systemCounts' => $systemCounts, 'updatedAgo' => $updatedAgo]);
+            ->render('tracker::index', ['systems' => $systems, 'systemCounts' => $systemCounts, 'updatedAgo' => $updatedAgo, 'totalCountedCharacters' => $totalCountedCharacters, 'totalValidCharacters' => $totalValidCharacters]);
     }
 
     public function create(CharacterInfo $character)

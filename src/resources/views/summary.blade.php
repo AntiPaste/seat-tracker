@@ -2,7 +2,7 @@
     <div class="card-header">
         <div class="d-flex justify-content-between">
             <h3 class="card-title">Location summary</h3>
-            <span>{{ $updatedAgo }}</span>
+            <span>Updated {{ $totalCountedCharacters }}/{{ $totalValidCharacters }} locations {{ $updatedAgo }}</span>
         </div>
     </div>
     <div class="row col card-body">
