@@ -18,7 +18,11 @@ class Normal extends Command
 
     public function handle()
     {
-        $targets = CharacterInfo::with('refresh_token')->whereHas('refresh_token')->get();
+        $targets = CharacterInfo::with('refresh_token')->whereHas('refresh_token')->where(function ($subQuery) {
+            $subQuery->whereHas('online', function ($query) {
+                $query->where('last_login', '>=', carbon()->subDays(30));
+            });
+        })->get();
 
         $this->line('Polling ' . $targets->count() . ' targets');
 

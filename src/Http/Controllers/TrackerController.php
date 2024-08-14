@@ -18,11 +18,19 @@ class TrackerController extends Controller
         $systemCounts = [];
         $totalCountedCharacters = 0;
 
-        $totalValidCharacters = CharacterInfo::whereHas('refresh_token')->whereHas('location')->count();
+        $totalValidCharacters = CharacterInfo::whereHas('refresh_token')->whereHas('location')->where(function ($subQuery) {
+            $subQuery->whereHas('online', function ($query) {
+                $query->where('last_login', '>=', carbon()->subDays(30));
+            });
+        })->count();
 
         $validCharacters = CharacterInfo::with('refresh_token')->with('location')->whereHas('refresh_token')->where(function ($subQuery) {
             $subQuery->whereHas('location', function ($query) {
                 $query->where('last_modified', '>=', carbon()->subMinutes(30));
+            });
+        })->where(function ($subQuery) {
+            $subQuery->whereHas('online', function ($query) {
+                $query->where('last_login', '>=', carbon()->subDays(30));
             });
         })->get();
 
