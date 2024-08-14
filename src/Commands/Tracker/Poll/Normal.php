@@ -28,14 +28,9 @@ class Normal extends Command
 
         $this->line('Polling ' . $targets->count() . ' targets');
 
-        $start = microtime(true);
         foreach ($targets as $target) {
-            (new LocationWithModified($target->refresh_token))->handle(true);
-            (new ShipWithModified($target->refresh_token))->handle(true);
+            $this->dispatch(new LocationWithModified($target->refresh_token));
+            $this->dispatch(new ShipWithModified($target->refresh_token));
         }
-
-        $end = microtime(true);
-
-        $this->line('Polled ' . $targets->count() . ' targets in ' . ($end - $start) . ' seconds');
     }
 }
