@@ -6,6 +6,9 @@
         </div>
     </div>
     <div class="row col card-body">
+        <div class="col-12"><i>Showing locations with more than 10 characters</i></div>
+        <div class="col-12"></div>
+
         @foreach ($systemCounts as $systemID => $count)
         <div class="col-1">{{ $count }}</div>
         <div class="col-11">{{ $systems[$systemID]->name }} ({{ $systems[$systemID]->region->name }})</div>

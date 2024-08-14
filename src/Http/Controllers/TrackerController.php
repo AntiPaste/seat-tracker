@@ -31,6 +31,12 @@ class TrackerController extends Controller
             $systemCounts[$character->location->solar_system_id] = ($systemCounts[$character->location->solar_system_id] ?? 0) + 1;
         }
 
+        $systemCounts = array_filter($systemCounts, function ($count) {
+            return $count >= 10;
+        });
+
+        arsort($systemCounts);
+
         $updatedAgo = $oldestUpdatedAt ? $oldestUpdatedAt->shortRelativeToNowDiffForHumans() : '-';
 
         $systems = [];
