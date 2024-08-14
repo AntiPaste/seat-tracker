@@ -42,7 +42,7 @@ class TrackerServiceProvider extends AbstractSeatPlugin
 
     public function register(): void
     {
-        $this->mergeConfigFrom(__DIR__ . '/Config/package.sidebar.php', 'package.sidebar.character.entries');
+        $this->mergeConfigFrom(__DIR__ . '/Config/package.sidebar.php', 'package.sidebar');
         $this->registerDatabaseSeeders(TrackerScheduleSeeder::class);
 
         $loader = AliasLoader::getInstance();

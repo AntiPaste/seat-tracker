@@ -1,11 +1,12 @@
 <?php
 
 return [
-    [
-        'permission'     => 'global.superuser',
-        'name'           => 'location tracker',
-        'label'          => 'Location Tracker',
-        'icon'           => 'fas fa-map-marker-alt',
-        'route'          => 'tracker.index',
+    'locationtracker' => [
+        'label' => 'Location Tracker',
+        'name' => 'Location Tracker',
+        'icon' => 'fas fa-map-marker-alt',
+        'route' => 'tracker.index',
+        'route_segment' => 'tracker',
+        'permission' => 'global.superuser',
     ]
 ];
